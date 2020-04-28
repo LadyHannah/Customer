@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="white">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"><!--IE兼容模式-->
+	<title>客户管理系统</title>
+	<link rel="icon" href="../assets/img/favicon.ico?v=1cf235d89e">
+	<link rel="stylesheet" href="../assets/css/lib/layui.css?v=9ffb8d798b">
+	<link rel="stylesheet" href="../assets/css/lib/layer.css?v=f860d17322">
+	<link rel="stylesheet" href="../assets/css/common.css?v=31c6d7ca31">
+	<link rel="stylesheet" href="../assets/css/page.css?v=fc9d8c3339">
+	<script src="../assets/js/lib/rem_pc.js?v=3f0b253467"></script>
+</head>
+<body class="white loginBody" >
+	<div class="ball1"></div>
+	<div class="ball2"></div>
+	<div class="ball3"></div>
+	<div class="ball4"></div>
+
+	<div id="vm" v-cloak>
+		<div class="loginBg">
+			<div class="loginCon">
+				<!-- <div class="left"></div> -->
+				<div class="layui-form form" lay-filter="loginForm" @keyup.13="keylogin($event)">
+					<div class="ball"></div>
+					<div class="title">客户管理系统</div>
+					<div class="userItme">
+						<i></i>
+						<input v-model="phone" class="user" type="tel" placeholder="手机号" autocomplete="off">
+					</div>
+					<div class="pswItme">
+						<i></i>
+						<input v-model="password" class="password" type="password" placeholder="密码" autocomplete="new-password">
+					</div>
+					<div class="layui-form-item remember">
+						<input type="checkbox" id="isRemember" name="isRemember" lay-skin="primary" title="记住账号" lay-filter="isRemember">
+					</div>
+					<button class="layui-btn layui-btn-normal loginBtn" @click="login" :disabled="disabled">登录</button>
+				</div>
+			</div>
+		</div>
+		<div class="loading" v-show="loadingFlag">
+			<i class="layui-icon layui-icon-loading-1 layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+		</div>
+	</div>
+
+	<script src="../assets/js/lib/vue.js?v=cbe2b9b2fb"></script>
+	<script src="../assets/js/lib/jquery.min.js?v=eb957ceaa1"></script>
+	<script src="../assets/js/lib/layui.all.js?v=1cac11c540"></script>
+	<script src="../assets/js/common/common.js?v=9581e57684"></script>
+	<script src="../assets/js/login.js?v=9070eaa1fd"></script>
+</body>
+</html>

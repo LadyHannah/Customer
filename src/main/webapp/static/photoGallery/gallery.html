@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片查看器</title>
+    <link rel="stylesheet" type="text/css" href="../fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="photoGallery.css"/>
+</head>
+<body>
+<div class="box">
+	<header drag>
+		<div class="winControl" noDrag>
+	        <span class="closeWin" title="关闭"><i class="fa fa-close"></i></span>
+	    </div>
+	</header>
+	<div class="gallery"></div>
+</div>
+</body>
+<script type="text/javascript" src="../jQuery/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="jquery.photo.gallery.js"></script>
+<script>
+	$.initGallery();
+</script>
+</html>

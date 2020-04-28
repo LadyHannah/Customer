@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+				
+			
+	<!-- 定时器  -->
+	<bean id="MsgPushRegularlyCtrl" class="so.microcloud.controller.common.MsgPushRegularlyCtrl" /><!-- 每天00:01am执行 -->
+	
+	<!-- 任务配置列表 -->  
+    <bean id="saveMsgPushDataJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="MsgPushRegularlyCtrl"></property><!-- 调用的类 -->
+        <property name="targetMethod" value="saveMsgPushData"></property><!-- 调用类中的方法 --> 
+        <property name="concurrent" value="false"/><!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->    
+    </bean> 
+    
+    <!-- 触发器配置  时间指定 -->  
+    <bean id="saveMsgPushDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="saveMsgPushDataJob"></property>  
+        <!-- cron表达式 -->  
+        <property name="cronExpression">  
+            <!-- 每隔10秒执行一次 <value>0/10 * * * * ?</value> -->  
+            <!-- 每天每隔10分钟执行一次 <value>0 0/10 * * * ?</value> -->  
+            <!-- <value>0 0/10 * * * ?</value> -->  
+            <!-- 每天上午8点执行一次 <value>0 0 8 * * ?</value>-->  
+            <!-- 在每天下午16点到下午16:59期间的每1分钟触发 <value>0 * 16 * * ?</value> -->  
+            <!-- 每天上午00：01分执行一次 -->  
+            <value>0 0 8 * * ?</value>  
+        </property>  
+    </bean>
+    
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->  
+    <bean id="schedulerFactoryBean" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                <!-- 触发器列表    -->  
+                <ref bean="saveMsgPushDataJobCronTrigger" />  
+            </list>  
+        </property>  
+    </bean> 
+	
+</beans>

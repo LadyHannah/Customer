@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>客户管理系统</title>
+<link rel="icon" href="../assets/img/favicon.ico?v=1cf235d89e">
+<link rel="stylesheet" href="../assets/css/lib/layui.css?v=9ffb8d798b">
+<link rel="stylesheet" href="../assets/css/lib/layer.css?v=f860d17322">
+<link rel="stylesheet"
+	href="../assets/iconfont/iconfont.css?v=5d99fd5883">
+<link rel="stylesheet" href="../assets/css/common.css?v=31c6d7ca31">
+<link rel="stylesheet" href="../assets/css/page.css?v=fc9d8c3339">
+</head>
+<body>
+	<div id="app" class="layui-layout layui-layout-admin" v-cloak>
+		<my-header @showpw="changePW"></my-header>
+
+		<!-- 左侧导航区域 -->
+		<left-bar :page-name="pageName"></left-bar>
+
+		<!-- 内容主体区域 -->
+		<div class="layui-body contentBody">
+			<div class="pageTitle">联系量统计</div>
+			<div class="emergencyCon">
+				<!--查询条件区域-->
+				<div class="layui-form form">
+					<div class="line">
+						<div class="inputOuter">
+							<div class="layui-inline">
+								<label class="label">关键字：</label>
+								<div class="layui-input-inline">
+									<input id="keyword" v-model="keyword" class="layui-input width300" type="text" 
+									placeholder="花名 / 真实姓名"  @keyup.13="keySearch($event)">
+								</div>
+							</div>
+						</div>
+						<div class="btnArea">
+							<button class="layui-btn layui-btn-primary queryBtn"
+								@click="getContactList(1);">开始检索</button>
+						</div>
+					</div>
+				</div>
+				<!--查询条件区域结束-->
+
+				<div class="tableArea">
+					<table class="layui-table" lay-skin="nob">
+						<thead>
+							<tr>
+								<th>花名</th>
+								<th>真实姓名</th>
+								<th>今日联系量</th>
+								<th>当月联系量</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-if="contactList.length===0">
+								<td colspan="4" class="m-text-center">暂无数据</td>
+							</tr>
+							<tr v-for="(item,index) in contactList">
+								<td>{{item.nickname}}</td>
+								<td>{{item.username}}</td>
+								<td v-if="item.todayCount == ''">无</td>
+								<td v-else>{{item.todayCount}}</td>
+								<td v-if="item.monthCount == ''">无</td>
+								<td v-else>{{item.monthCount}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--分页-->
+					<m-page :item="pageData" @changepage="changePage"></m-page>
+					<!--分页 结束-->
+				</div>
+			</div>
+		</div>
+		
+		<!--修改密码弹窗-->
+		<modifypw-pop :pop-display="popDisplay" @closepw="changePW"></modifypw-pop>
+	</div>
+
+
+
+	<script src="../assets/js/lib/rem_pc.js?v=3f0b253467"></script>
+	<script src="../assets/js/lib/jquery.min.js?v=eb957ceaa1"></script>
+	<script src="../assets/js/lib/vue.js?v=cbe2b9b2fb"></script>
+	<script src="../assets/js/lib/layui.all.js?v=1cac11c540"></script>
+	<script src="../assets/js/common/common.js?v=9581e57684"></script>
+	<script src="../assets/js/common/components.js?v=e7d46d98ef"></script>
+	<script src="../assets/js/contactStatistics.js?v=52af652246"></script>
+</body>
+</html>

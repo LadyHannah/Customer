@@ -1,0 +1,18 @@
+{
+  "common/common.js": "common/common.js?v=9581e57684",
+  "common/components.js": "common/components.js?v=e7d46d98ef",
+  "followUp.js": "followUp.js?v=1720626d8a",
+  "hospitalManage.js": "hospitalManage.js?v=7fd4452cd6",
+  "leaveSummary.js": "leaveSummary.js?v=c77054f9a7",
+  "lib/jquery.min.js": "lib/jquery.min.js?v=eb957ceaa1",
+  "lib/layui.all.js": "lib/layui.all.js?v=1cac11c540",
+  "lib/rem_pc.js": "lib/rem_pc.js?v=3f0b253467",
+  "lib/vue.js": "lib/vue.js?v=cbe2b9b2fb",
+  "login.js": "login.js?v=9070eaa1fd",
+  "patientList.js": "patientList.js?v=153b059518",
+  "roleManage.js": "roleManage.js?v=a61f0db4bb",
+  "roleManage_rights.js": "roleManage_rights.js?v=2a0e52a2e1",
+  "swallowAssessment.js": "swallowAssessment.js?v=0ee43710dd",
+  "userManage.js": "userManage.js?v=52af652246",
+  "userManage_rights.js": "userManage_rights.js?v=b448d36c12"
+}

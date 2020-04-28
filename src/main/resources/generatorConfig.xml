@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<classPathEntry location="D:\Maven\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />
+		
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> 
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/Customer_Management_System?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="customer" password="customer@5402">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="so.microcloud.bean"
+			targetProject="customer\src\main\java">
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="so.microcloud.mapping"
+			targetProject="customer\src\main\java">
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="so.microcloud.dao" 
+			targetProject="customer\src\main\java">
+		</javaClientGenerator>
+		
+		<!-- <table schema="" tableName="t_sys_user" domainObjectName="User"><generatedKey column="id" sqlStatement="JDBC"/></table> -->
+		<!-- <table schema="" tableName="history" domainObjectName="History"></table> -->
+		<table schema="" tableName="t_customer_contact" domainObjectName="CustomerContact"><generatedKey column="id" sqlStatement="JDBC"/></table>
+		<!-- <table schema="" tableName="t_customer_type" domainObjectName="CustomerType"><generatedKey column="id" sqlStatement="JDBC"/></table> -->		
+	</context>
+</generatorConfiguration>

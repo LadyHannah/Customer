@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>客户管理系统</title>
+<link rel="icon" href="../assets/img/favicon.ico?v=1cf235d89e">
+<link rel="stylesheet" href="../assets/css/lib/layui.css?v=9ffb8d798b">
+<link rel="stylesheet" href="../assets/css/lib/layer.css?v=f860d17322">
+<link rel="stylesheet" href="../assets/css/common.css?v=31c6d7ca31">
+<link rel="stylesheet" href="../assets/css/page.css?v=fc9d8c3339">
+<link rel="stylesheet" href="../assets/iconfont/iconfont.css?v=5d99fd5883">
+</head>
+<body>
+	<div id="app" class="layui-layout layui-layout-admin" v-cloak>
+		<my-header @showpw="changePW"></my-header>
+
+		<!-- 内容主体区域 -->
+		<div class="layui-body detailBody">
+			<div class="pageTitle" v-if="isPublic==0">修改客户信息</div>
+			<div class="pageTitle" v-if="isPublic==1">客户信息</div>
+			<div class="swallowCon">
+				<div class="baseInfo">
+					<form class="layui-form" action="" lay-filter="customerForm">
+						<div class="layui-form-item">
+							<label class="layui-form-label">店铺名称</label>
+							<div class="layui-input-block">
+								<input type="text" name="shopName" placeholder="请输入店铺名称"
+									autocomplete="off" class="layui-input" v-model="shopName" :disabled="isPublic==1">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label"><i class="requiredItem">*</i>客户姓名</label>
+							<div class="layui-input-block">
+								<input type="text" name="customerName" lay-verify="required"
+									placeholder="请输入客户姓名" autocomplete="off" class="layui-input"
+									v-model="customerName" :disabled="isPublic==1">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label"><i class="requiredItem">*</i>联系电话</label>
+							<div class="layui-input-block">
+								<input type="tel" name="phone" required
+									lay-verify="required|phone" placeholder="请输入联系电话"
+									autocomplete="off" class="layui-input" v-model="phone" :disabled="isPublic==1">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label"><i class="requiredItem">*</i>客户类型</label>
+							<div class="layui-input-block">
+								<select name="customerType" lay-verify="required" lay-filter="customerType" :disabled="isPublic==1">
+									<option value="">请选择</option>
+									<option v-for="item in typeList" :value="item.id"
+										v-text="item.typeName"></option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item layui-form-text" v-show="typeId==1"
+							style="margin-bottom: 45px;">
+							<label class="layui-form-label"><i class="requiredItem">*</i>已购产品</label>
+							<div class="layui-input-block">
+								<textarea name="desc" placeholder="请输入已购产品（不超过1500字）"
+									class="layui-textarea" style="width: 548%;" v-model="product" :disabled="isPublic==1"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label">联系小计</label>
+							<div class="layui-input-block">
+								<textarea name="desc" placeholder="请输入联系小计（不超过1500字）"
+									class="layui-textarea" style="width: 548%;" v-model="content" :disabled="isPublic==1"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="contact-item">
+					<div class="history-title" v-if="contactList.length == 0">暂无联系记录</div>
+					<div class="history-title" v-if="contactList.length > 0">历史联系记录</div>
+					<ul class="layui-timeline">
+						<li class="layui-timeline-item" v-for="(contact, index) in contactList">
+							<i class="layui-icon layui-timeline-axis"></i>
+							<div class="layui-timeline-content layui-text">
+								<h3 class="layui-timeline-title">{{contact.lastModifyTime}}&nbsp;&nbsp;&nbsp;{{contact.createUserName}}</h3>
+								<p>{{contact.content}}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="reviewCon">
+					<button class="layui-btn layui-btn-primary" @click="modify" v-if="isPublic==0">保存修改</button>
+					<button class="layui-btn layui-btn-primary" @click="drop" v-if="isPublic==0">扔入公海</button>
+					<button class="layui-btn layui-btn-primary" @click="getBack" v-if="isPublic==1">取回</button>
+					<button class="layui-btn layui-btn-primary" @click="deleted" v-if="isAdmin == 1">删除</button>
+					<button class="layui-btn layui-btn-primary" @click="goToIndex" v-if="isPublic==0">返回</button>
+					<button class="layui-btn layui-btn-primary" @click="goToPublic" v-if="isPublic==1">返回</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!--修改密码弹窗-->
+		<modifypw-pop :pop-display="popDisplay" @closepw="changePW"></modifypw-pop>
+	</div>
+
+	<script src="../assets/js/lib/rem_pc.js?v=3f0b253467"></script>
+	<script src="../assets/js/lib/jquery.min.js?v=eb957ceaa1"></script>
+	<script src="../assets/js/lib/vue.js?v=cbe2b9b2fb"></script>
+	<script src="../assets/js/lib/layui.all.js?v=1cac11c540"></script>
+	<script src="../assets/js/common/common.js?v=9581e57684"></script>
+	<script src="../assets/js/common/components.js?v=e7d46d98ef"></script>
+	<script src="../assets/js/modifyCustomer.js?v=c77054f9a7"></script>
+</body>
+</html>

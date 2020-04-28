@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="icon" href="../assets/img/favicon.ico?v=1cf235d89e">
+	<link rel="stylesheet" href="../assets/css/lib/layui.css?v=9ffb8d798b">
+	<link rel="stylesheet" href="../assets/css/lib/laydate.css?v=f9c7dc37ec">
+	<link rel="stylesheet" href="../assets/iconfont/iconfont.css?v=5d99fd5883">
+	<link rel="stylesheet" href="../assets/css/common.css?v=31c6d7ca31">
+	<link rel="stylesheet" href="../assets/css/page.css?v=fc9d8c3339">
+</head>
+<body>
+	<div id="app" class="layui-layout layui-layout-admin" v-cloak>
+		<my-header @showpw="changePW"></my-header>
+		<!-- 左侧导航区域 -->
+		<left-bar :page-name="pageName"></left-bar>
+
+		<!-- 内容主体区域 -->
+		<div class="layui-body contentBody">
+			<div class="pageTitle">我的客户</div>
+			<div class="patientListCon">
+				<!--查询条件区域-->
+				<div class="layui-form form" lay-filter="customerForm">
+					<div class="line">
+						<div class="inputOuter"></div>
+						<div class="btnArea">
+							<button class="layui-btn layui-btn-primary createBtn" @click="goToAdd">添加客户</button>
+						</div>
+					</div>
+					<div class="line">
+						<div class="inputOuter">
+							<div class="layui-input-inline">
+								<select id="customerTypeSelect" lay-filter="customerTypeSelect" name="customerTypeSelect">
+									<option value="">客户类型</option>
+									<option v-for="item in customerTypeList" :value="item.id" v-text="item.typeName"></option>
+								</select>
+							</div>
+							<div class="layui-input-inline margin30">
+								<input id="keyword" v-model="keyword" class="layui-input width300" type="text" 
+								placeholder="店铺名称 / 客户姓名 / 联系电话 / 当前归属" @keyup.13="keySearch($event)" v-if="isAdmin == 1">
+								<input id="keyword" v-model="keyword" class="layui-input width300" type="text" 
+								placeholder="店铺名称 / 客户姓名 / 联系电话" @keyup.13="keySearch($event)" v-else>
+							</div>
+						</div>
+						<div class="btnArea">
+							<button class="layui-btn layui-btn-primary queryBtn" @click="getCustomerList(1);">开始检索</button>
+						</div>
+
+					</div>
+				</div>
+				<!--查询条件区域结束-->
+
+				<div class="tableArea">
+					<table class="layui-table" lay-skin="nob">
+						<thead>
+						<tr>
+							<th>店铺名称</th>
+							<th>客户姓名</th>
+							<th>联系电话</th>
+							<th>客户类型</th>
+							<th>当前归属</th>
+							<th>从公海取回时间</th>
+							<th>创建用户</th>
+							<th>创建时间</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr v-if="customerList.length===0"><td colspan="10" class="m-text-center">暂无数据</td></tr>
+						<tr v-for="(item,index) in customerList" @click="goToModify(item)" style="cursor: pointer;">
+							<td>{{item.shopName}}</td>
+							<td>{{item.customerName}}</td>
+							<td>{{item.phone}}</td>
+							<td>{{item.typeName}}</td>
+							<td >{{item.claimUserName}}</td>
+							<td >{{item.claimTime}}</td>
+							<td >{{item.createUserName}}</td>
+							<td >{{item.createTime}}</td>
+						</tr>
+						</tbody>
+					</table>
+					<!--分页-->
+					<m-page :item="pageData" @changepage="changePage"></m-page>
+				</div>
+			</div>
+		</div>
+
+		<!--修改密码弹窗-->
+		<modifypw-pop :pop-display="popDisplay" @closepw="changePW"></modifypw-pop>
+	</div>
+
+
+
+
+	<script src="../assets/js/lib/rem_pc.js?v=3f0b253467"></script>
+	<script src="../assets/js/lib/jquery.min.js?v=eb957ceaa1"></script>
+	<script src="../assets/js/lib/vue.js?v=cbe2b9b2fb"></script>
+	<script src="../assets/js/lib/layui.all.js?v=1cac11c540"></script>
+	<script src="../assets/js/common/common.js?v=9581e57684"></script>
+	<script src="../assets/js/common/components.js?v=e7d46d98ef"></script>
+	<script src="../assets/js/index.js?v=153b059518"></script>
+</body>
+</html>
